@@ -8,8 +8,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/gorilla/mux"
 
-	"github.com/yourname/ingestion-service/kafka"
-	"github.com/yourname/ingestion-service/handlers"
+	"github.com/sunlightsky112/ingestion-service/kafka"
+	"github.com/sunlightsky112/ingestion-service/handlers"
 )
 
 func main() {
