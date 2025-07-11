@@ -1,17 +1,28 @@
-package handlers
+package routes
 
 import (
 	"encoding/json"
 	"net/http"
 	"time"
 
-	"github.com/yourname/ingestion-service/kafka"
-	"github.com/yourname/ingestion-service/models"
+	"ingestion-service/kafka"
+	"ingestion-service/models"
 )
 
+func RegisterRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("/orders", HandleOrder)
+}
+
 func HandleOrder(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
 	var order models.Order
-	if err := json.NewDecoder(r.Body).Decode(&order); err != nil {
+
+	err := json.NewDecoder(r.Body).Decode(&order)
+	if err != nil {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
@@ -22,14 +33,14 @@ func HandleOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	order.CreatedAt = time.Now().Unix()
-
 	payload, err := json.Marshal(order)
 	if err != nil {
 		http.Error(w, "Failed to serialize", http.StatusInternalServerError)
 		return
 	}
 
-	if err := kafka.Publish("orders", payload); err != nil {
+	err = kafka.PublishMessage("orders", payload)
+	if err != nil {
 		http.Error(w, "Failed to publish to Kafka", http.StatusInternalServerError)
 		return
 	}

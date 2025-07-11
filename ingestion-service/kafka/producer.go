@@ -21,7 +21,7 @@ func InitProducer() {
 	}
 }
 
-func Publish(topic string, message []byte) error {
+func PublishMessage(topic string, message []byte) error {
 	msg := &sarama.ProducerMessage{
 		Topic: topic,
 		Value: sarama.ByteEncoder(message),
