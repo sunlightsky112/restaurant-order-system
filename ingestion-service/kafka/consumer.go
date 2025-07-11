@@ -24,7 +24,7 @@ func (consumerGroupHandler) ConsumeClaim(sess sarama.ConsumerGroupSession, claim
 			continue
 		}
 
-		fmt.Printf("✅ Consumed order: %s\n", order.ID)
+		fmt.Printf("✅ Consumed order: %s\n", order)
 		if err := mongo.InsertOrder(order); err != nil {
 			log.Println("Mongo insert error:", err)
 			continue

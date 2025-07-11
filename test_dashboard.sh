@@ -2,9 +2,14 @@
 
 BASE_URL="http://localhost:3001/orders"
 RESTAURANT_ID="r001"
+ORDER_ID="test_order_1"
 
 echo "🔍 Get recent orders"
 curl -s "$BASE_URL/recent/$RESTAURANT_ID" | jq
+
+
+echo "📦 Get order details"
+curl -s "$BASE_URL/$RESTAURANT_ID/$ORDER_ID" | jq
 
 echo "📊 Get daily aggregates"
 curl -s "$BASE_URL/daily-aggregates/$RESTAURANT_ID" | jq

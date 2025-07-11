@@ -69,6 +69,7 @@ router.get("/recent/:restaurantId", async (req, res) => {
     60, // 1 minute
     () => getRecentOrders(restaurantId)
   );
+  console.log("Get Recent Orders: ", data);
   res.json(data);
 });
 
@@ -78,6 +79,7 @@ router.get("/:restaurantId/:orderId", async (req, res) => {
     req.params.restaurantId,
     req.params.orderId
   );
+  console.log("Get Order Details: ", data);
   res.json(data);
 });
 
@@ -89,6 +91,7 @@ router.get("/daily-aggregates/:restaurantId", async (req, res) => {
     30, // 30 seconds
     () => getDailyAggregates(restaurantId)
   );
+  console.log("Get Daily Aggregates: ", data);
   res.json(data[0] || { total_orders: 0, total_revenue: 0 });
 });
 
@@ -101,6 +104,7 @@ router.get("/popular-items", async (req, res) => {
     300, // 5 minutes
     () => getMostPopularItems(start, end)
   );
+  console.log("Get Most Popular Items: ", data);
   res.json(data);
 });
 
