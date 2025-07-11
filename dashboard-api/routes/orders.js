@@ -74,7 +74,7 @@ router.get("/recent/:restaurantId", async (req, res) => {
 });
 
 // 2. Get Order Details: Input - order_id, restaurant_id; Output - full order info. (no cache recommended — real-time details)
-router.get("/:restaurantId/:orderId", async (req, res) => {
+router.get("/detail/:restaurantId/:orderId", async (req, res) => {
   const data = await getOrderDetails(
     req.params.restaurantId,
     req.params.orderId
@@ -117,6 +117,7 @@ router.get("/volume", async (req, res) => {
     300, // 5 minutes
     () => getOrderVolumeOverTime(start, end)
   );
+  console.log("Get order volume Over Time: ", data);
   res.json(data);
 });
 

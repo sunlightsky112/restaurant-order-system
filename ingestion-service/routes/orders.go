@@ -32,7 +32,7 @@ func HandleOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	order.CreatedAt = time.Now().Unix()
+	order.CreatedAt = time.Now()
 	payload, err := json.Marshal(order)
 	if err != nil {
 		http.Error(w, "Failed to serialize", http.StatusInternalServerError)
